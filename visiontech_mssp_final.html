@@ -3,874 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Visiontech MSSP — Sales Performance Report | Jan–Apr 2026</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Visiontech MSSP — Password Protected</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:#0c2340;--navy2:#153a5e;--navy3:#1d4f7c;
-  --teal:#076e52;--teal2:#0a9470;
-  --red:#b83232;--amber:#9a5f0f;
-  --slate:#475569;--hint:#94a3b8;--border:#dde3ed;
-  --bg:#f4f6fa;--white:#fff;--text:#0f1f33;--muted:#4a5568;
-  --won-bg:#e6f4ee;--won-txt:#075c41;
-  --hot-bg:#fdecea;--hot-txt:#8c2a1c;
-  --warm-bg:#fef3e2;--warm-txt:#7a4a0a;
-  --cold-bg:#f1f3f7;--cold-txt:#3d4a5c;
-  --eval-bg:#e8f1fb;--eval-txt:#1a4d8f;
-  --shadow:0 1px 3px rgba(0,0,0,0.07),0 0 0 0.5px rgba(0,0,0,0.06);
-}
-body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);font-size:13.5px;line-height:1.55}
-.hdr{background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
-.hdr-l{display:flex;align-items:center;gap:14px}
-.logo{width:34px;height:34px;border-radius:7px;background:var(--teal2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;letter-spacing:-0.5px}
-.hdr-title{font-size:14.5px;font-weight:500}
-.hdr-sub{font-size:10.5px;color:rgba(255,255,255,0.5);margin-top:1px}
-.hdr-badge{font-size:10.5px;background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.18);padding:4px 12px;border-radius:4px;color:rgba(255,255,255,0.75);font-family:'IBM Plex Mono',monospace;letter-spacing:0.02em}
-.tab-strip{background:var(--white);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;position:sticky;top:58px;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,0.04);overflow-x:auto}
-.tab{font-size:12.5px;padding:12px 18px;border:none;background:none;cursor:pointer;color:var(--hint);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:'IBM Plex Sans',sans-serif;font-weight:400;transition:color 0.12s;white-space:nowrap}
-.tab:hover:not(.active){color:var(--text);background:rgba(0,0,0,0.02)}
-.tab.active{color:var(--navy);border-bottom-color:var(--navy3);font-weight:500}
-.page{max-width:1260px;margin:0 auto;padding:1.75rem 2rem 4rem}
-.panel{display:none}.panel.active{display:block}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem}
-.kpi{background:var(--white);border-radius:8px;box-shadow:var(--shadow);padding:1.125rem 1.25rem;border-left:3px solid transparent;cursor:pointer;transition:box-shadow 0.15s,transform 0.1s}
-.kpi:hover{box-shadow:0 4px 12px rgba(0,0,0,0.12);transform:translateY(-1px)}
-.kpi.bl-n{border-left-color:var(--navy2)}.kpi.bl-t{border-left-color:var(--teal)}.kpi.bl-r{border-left-color:var(--red)}.kpi.bl-a{border-left-color:var(--amber)}
-.kpi-lbl{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--hint);margin-bottom:7px}
-.kpi-val{font-size:26px;font-weight:600;color:var(--text);line-height:1;letter-spacing:-0.5px}
-.kpi-sub{font-size:11px;margin-top:6px}
-.kpi-click{font-size:10px;color:var(--hint);margin-top:5px;letter-spacing:0.03em}
-.up{color:var(--teal)}.dn{color:var(--red)}.neu{color:var(--hint)}
-.sec{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--hint);margin-bottom:10px;margin-top:1.75rem;padding-bottom:6px;border-bottom:1px solid var(--border)}
-.card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:1.25rem 1.5rem}
-.card-t{font-size:13.5px;font-weight:500;color:var(--text);margin-bottom:2px}
-.card-s{font-size:11px;color:var(--hint);margin-bottom:14px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.5rem}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:1.5rem}
-.chart-w{position:relative}
-.chart-click-hint{font-size:10px;color:var(--hint);text-align:right;margin-top:4px}
-.leg{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px}
-.leg span{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
-.lsq{width:9px;height:9px;border-radius:2px;flex-shrink:0}
-.frow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.flbl{font-size:11.5px;color:var(--muted);min-width:155px;text-align:right}
-.fbwrap{flex:1;background:#eef0f5;border-radius:3px;height:26px;overflow:hidden;cursor:pointer}
-.fbwrap:hover .fbar{filter:brightness(1.1)}
-.fbar{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:10px;transition:width 0.6s ease}
-.fbar span{font-size:11px;font-weight:500;color:#fff;white-space:nowrap}
-.fcnt{font-size:11.5px;color:var(--hint);min-width:32px;text-align:right;font-family:'IBM Plex Mono',monospace}
-.pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap;letter-spacing:0.02em}
-.p-won{background:var(--won-bg);color:var(--won-txt)}
-.p-hot{background:var(--hot-bg);color:var(--hot-txt)}
-.p-warm{background:var(--warm-bg);color:var(--warm-txt)}
-.p-cold{background:var(--cold-bg);color:var(--cold-txt)}
-.p-eval{background:var(--eval-bg);color:var(--eval-txt)}
-.p-hold{background:#fdecea;color:#8c2a1c}
-.tbl-wrap{overflow-x:auto;border-radius:10px;box-shadow:var(--shadow)}
-table.tbl{width:100%;border-collapse:collapse;background:var(--white);font-size:12px}
-table.tbl th{font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--hint);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;background:#fafbfc;white-space:nowrap}
-table.tbl td{padding:8px 12px;border-bottom:0.5px solid var(--border);color:var(--text);vertical-align:middle}
-table.tbl tr:last-child td{border-bottom:none}
-table.tbl tr:hover td{background:#f8f9fb}
-.mono{font-family:'IBM Plex Mono',monospace;font-size:11.5px}
-.fw{font-weight:500}
-.total-row td{font-weight:600;background:#f5f7fa!important;border-top:1.5px solid var(--border)}
-.filter-bar{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
-.fl{font-size:12px;color:var(--muted);margin-right:4px;font-weight:500}
-.fbtn{font-size:12px;padding:5px 13px;border:1px solid var(--border);border-radius:5px;background:var(--white);cursor:pointer;color:var(--muted);font-family:'IBM Plex Sans',sans-serif;transition:all 0.1s}
-.fbtn:hover:not(.on){background:var(--bg)}
-.fbtn.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-.mo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem}
-.mo-col{background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:1.125rem;border-top:3px solid var(--border)}
-.mo-col.cur{border-top-color:var(--navy2)}
-.mo-col.up{border-top-color:var(--border);opacity:0.72}
-.mo-m{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--hint);margin-bottom:10px}
-.mo-m.c{color:var(--navy2)}
-.mo-r{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
-.mo-k{font-size:11.5px;color:var(--muted)}.mo-v{font-size:13px;font-weight:500}
-.mo-div{border-top:0.5px solid var(--border);margin:8px 0}
-.du{color:var(--teal);font-size:10px}.dd{color:var(--red);font-size:10px}
-.actn-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.actn-card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:1.125rem 1.25rem}
-.actn-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.actn-t{font-size:13px;font-weight:500}
-.bdg{font-size:10px;padding:3px 9px;border-radius:4px;font-weight:600}
-.b1{background:var(--hot-bg);color:var(--hot-txt)}.b2{background:var(--warm-bg);color:var(--warm-txt)}.b3{background:var(--cold-bg);color:var(--cold-txt)}
-.ai-row{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
-.ai-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
-.ai-txt{font-size:12.5px;color:var(--muted);line-height:1.45}
-.ai-dt{font-size:10.5px;color:var(--hint);margin-top:2px}
-.rp{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-.rc{border-radius:7px;padding:10px 12px}
-.rc-r{background:var(--hot-bg);border:0.5px solid #f5b8b2}.rc-o{background:var(--won-bg);border:0.5px solid #a8dcc4}
-.rt{font-size:10px;font-weight:700;margin-bottom:4px;letter-spacing:0.04em}
-.rt-r{color:var(--hot-txt)}.rt-o{color:var(--won-txt)}
-.rtxt{font-size:11.5px;line-height:1.4}
-.search-wrap{position:relative;margin-bottom:1rem}
-.search-wrap input{width:280px;padding:7px 12px 7px 32px;border:1px solid var(--border);border-radius:6px;font-size:12.5px;font-family:'IBM Plex Sans',sans-serif;background:var(--white);color:var(--text)}
-.search-wrap input:focus{outline:none;border-color:var(--navy3);box-shadow:0 0 0 2px rgba(28,79,124,0.12)}
-.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--hint);font-size:13px}
-.pag{display:flex;gap:6px;align-items:center;justify-content:flex-end;margin-top:10px;font-size:12px;color:var(--muted)}
-.pag-btn{padding:4px 10px;border:1px solid var(--border);border-radius:4px;background:var(--white);cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--muted)}
-.pag-btn:hover{background:var(--bg)}.pag-btn.disabled{opacity:0.4;cursor:default}
-.pag-info{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--hint)}
-.footer{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:11px;color:var(--hint)}
-.conf-strip{background:var(--navy);color:rgba(255,255,255,0.45);text-align:center;font-size:10px;letter-spacing:0.12em;padding:4px;text-transform:uppercase}
-
-/* ── MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(12,35,64,0.55);z-index:1000;align-items:center;justify-content:center;padding:1.5rem}
-.modal-overlay.open{display:flex}
-.modal{background:var(--white);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,0.2);width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
-.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);flex-shrink:0}
-.modal-title{font-size:15px;font-weight:600;color:var(--text)}
-.modal-sub{font-size:11.5px;color:var(--hint);margin-top:2px}
-.modal-close{width:30px;height:30px;border-radius:6px;border:none;background:var(--bg);cursor:pointer;font-size:16px;color:var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.modal-close:hover{background:var(--border)}
-.modal-body{padding:1.25rem 1.5rem;overflow-y:auto;flex:1}
-.modal-kpi-row{display:flex;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap}
-.modal-kpi{background:var(--bg);border-radius:8px;padding:0.75rem 1rem;flex:1;min-width:120px}
-.modal-kpi-l{font-size:10px;color:var(--hint);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;margin-bottom:4px}
-.modal-kpi-v{font-size:20px;font-weight:600;color:var(--text)}
-.deal-card{background:var(--bg);border-radius:10px;padding:1rem 1.25rem;margin-bottom:10px;border-left:4px solid var(--teal)}
-.deal-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.deal-card-name{font-size:14px;font-weight:600;color:var(--text)}
-.deal-card-val{font-size:16px;font-weight:600;color:var(--teal);font-family:'IBM Plex Mono',monospace}
-.deal-card-row{display:flex;gap:20px;flex-wrap:wrap;margin-top:6px}
-.deal-card-field{font-size:11.5px;color:var(--muted)}
-.deal-card-field strong{color:var(--text);font-weight:500}
-.won-banner{background:var(--won-bg);border:1px solid #a8dcc4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;font-size:12.5px;color:var(--won-txt);font-weight:500}
-@media(max-width:960px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.mo-grid{grid-template-columns:repeat(2,1fr)}.row2,.row3,.actn-grid{grid-template-columns:1fr}.page{padding:1rem}}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0c2340 0%, #1d4f7c 100%);
+  }
+  .login-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+  .logo { font-size: 40px; margin-bottom: 1rem; }
+  h1 { color: #0c2340; margin-bottom: 0.5rem; font-size: 24px; }
+  .subtitle { color: #7a8fa6; margin-bottom: 2rem; font-size: 13px; }
+  .form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #0c2340;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #dde3ed;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Segoe UI', sans-serif;
+    transition: all 0.3s;
+  }
+  input:focus {
+    outline: none;
+    border-color: #0057ff;
+    box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.1);
+  }
+  button {
+    width: 100%;
+    padding: 11px;
+    background: linear-gradient(135deg, #0057ff, #003dbf);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 87, 255, 0.35); }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+  .error { color: #c0392b; font-size: 12px; margin-top: 0.5rem; display: none; }
+  .success { color: #00875a; font-size: 12px; margin-top: 0.5rem; display: none; }
+  .footer { color: #7a8fa6; font-size: 11px; margin-top: 1.5rem; }
 </style>
 </head>
 <body>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnBg(event)">
-  <div class="modal">
-    <div class="modal-hdr">
-      <div>
-        <div class="modal-title" id="modal-title">Detail View</div>
-        <div class="modal-sub" id="modal-sub"></div>
-      </div>
-      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+<div class="login-container">
+  <div class="logo">🔐</div>
+  <h1>Visiontech MSSP</h1>
+  <p class="subtitle">Confidential Sales Report — Jan–Apr 2026</p>
+  
+  <form onsubmit="checkPassword(event)">
+    <div class="form-group">
+      <label for="pwd">Enter Password:</label>
+      <input type="password" id="pwd" placeholder="Enter access password" required autofocus>
     </div>
-    <div class="modal-body" id="modal-body"></div>
+    <button type="submit">Unlock Report</button>
+    <div class="error" id="error">❌ Incorrect password. Try again.</div>
+  </form>
+  
+  <div class="footer">
+    Confidential — Visiontech UAE MSSP Business Unit<br>
+    For authorized access only
   </div>
 </div>
-
-<div class="conf-strip">Confidential &nbsp;·&nbsp; Visiontech UAE — MSSP Business Unit &nbsp;·&nbsp; Internal Distribution Only</div>
-
-<div class="hdr">
-  <div class="hdr-l">
-    <div class="logo">VT</div>
-    <div>
-      <div class="hdr-title">Visiontech UAE — MSSP Business Unit</div>
-      <div class="hdr-sub">Sales Performance Report &nbsp;·&nbsp; Ali Gheeya, Senior Cybersecurity &amp; Channel Operations</div>
-    </div>
-  </div>
-  <div class="hdr-badge">Jan – Apr 2026 &nbsp;·&nbsp; Next Update: 31 May 2026</div>
-</div>
-
-<div class="tab-strip">
-  <button class="tab active" onclick="showTab('dashboard',this)">Dashboard</button>
-  <button class="tab" onclick="showTab('janfeb',this)">Jan–Feb Detail</button>
-  <button class="tab" onclick="showTab('march',this)">March Detail</button>
-  <button class="tab" onclick="showTab('pipeline',this)">Product Pipeline</button>
-  <button class="tab" onclick="showTab('april',this)">April Report</button>
-</div>
-
-<div class="page">
-
-<!-- DASHBOARD -->
-<div id="tab-dashboard" class="panel active">
-  <div class="kpi-grid">
-    <div class="kpi bl-n" onclick="showModal('pipeline-total')"><div class="kpi-lbl">Total Pipeline</div><div class="kpi-val">AED 1.18M</div><div class="kpi-sub up">&#9650; +135% vs Jan–Feb</div><div class="kpi-click">&#x2B0C; Click to see pipeline breakdown</div></div>
-    <div class="kpi bl-n" onclick="showModal('active-opps')"><div class="kpi-lbl">Active Opportunities</div><div class="kpi-val">34</div><div class="kpi-sub up">&#9650; +467% cumulative</div><div class="kpi-click">&#x2B0C; Click to see all opportunities</div></div>
-    <div class="kpi bl-t" onclick="showModal('deals-won-all')"><div class="kpi-lbl">Deals Closed Won</div><div class="kpi-val">3</div><div class="kpi-sub up">SIPS · AL Qasimi · Quality Intl</div><div class="kpi-click">&#x2B0C; Click to see deal details</div></div>
-    <div class="kpi bl-t" onclick="showModal('revenue')"><div class="kpi-lbl">Revenue Realised</div><div class="kpi-val">AED 18.8K</div><div class="kpi-sub neu">3 closed deals</div><div class="kpi-click">&#x2B0C; Click to see breakdown</div></div>
-    <div class="kpi bl-r" onclick="showModal('hot-deals')"><div class="kpi-lbl">HOT Deal Value</div><div class="kpi-val">AED 489K</div><div class="kpi-sub up">6 accounts in active pursuit</div><div class="kpi-click">&#x2B0C; Click to see HOT deals</div></div>
-    <div class="kpi bl-r" onclick="showModal('gdrfa')"><div class="kpi-lbl">GDRFA SimuPhish</div><div class="kpi-val">AED 416K</div><div class="kpi-sub up">Largest deal — in evaluation</div><div class="kpi-click">&#x2B0C; Click for deal detail</div></div>
-    <div class="kpi bl-a" onclick="showModal('education')"><div class="kpi-lbl">Education Pipeline</div><div class="kpi-val">AED 581K</div><div class="kpi-sub neu">8 schools · Warm · Post 14 Apr</div><div class="kpi-click">&#x2B0C; Click to see all schools</div></div>
-    <div class="kpi bl-a" onclick="showModal('april-all')"><div class="kpi-lbl">April Outreach Accounts</div><div class="kpi-val">79</div><div class="kpi-sub up">&#9650; Largest monthly expansion</div><div class="kpi-click">&#x2B0C; Click to see all 79 accounts</div></div>
-  </div>
-
-  <div class="sec">Pipeline &amp; Growth Analysis</div>
-  <div class="row2">
-    <div class="card">
-      <div class="card-t">Pipeline by product — AED value</div>
-      <div class="card-s">April 2026 snapshot · Total AED 1,184,164</div>
-      <div class="leg">
-        <span><span class="lsq" style="background:#153a5e"></span>Sangfor 659K</span>
-        <span><span class="lsq" style="background:#b83232"></span>SimuPhish 416K</span>
-        <span><span class="lsq" style="background:#076e52"></span>Acronis 113K</span>
-        <span><span class="lsq" style="background:#475569"></span>CCTV P2 47K</span>
-        <span><span class="lsq" style="background:#9a5f0f"></span>Trend Micro 27K</span>
-      </div>
-      <div class="chart-w" style="height:230px"><canvas id="c1"></canvas></div>
-      <div class="chart-click-hint">Click any bar for product details</div>
-    </div>
-    <div class="card">
-      <div class="card-t">Pipeline growth — month on month</div>
-      <div class="card-s">Cumulative AED value trend Jan–Apr 2026</div>
-      <div class="leg"><span><span class="lsq" style="background:#153a5e"></span>Pipeline AED</span><span><span class="lsq" style="background:#076e52"></span>Active opps trend</span></div>
-      <div class="chart-w" style="height:230px"><canvas id="c2"></canvas></div>
-      <div class="chart-click-hint">Click any data point for month breakdown</div>
-    </div>
-  </div>
-
-  <div class="row2">
-    <div class="card">
-      <div class="card-t">Sales funnel — April 2026</div>
-      <div class="card-s">Account count by pipeline stage · Click any bar to drill down</div>
-      <div style="margin-top:14px">
-        <div class="frow"><span class="flbl">Closed won</span><div class="fbwrap" onclick="showModal('deals-won-all')"><div class="fbar" style="width:4%;background:#076e52"><span>3</span></div></div><span class="fcnt">3</span></div>
-        <div class="frow"><span class="flbl">HOT / Negotiation</span><div class="fbwrap" onclick="showModal('hot-deals')"><div class="fbar" style="width:8%;background:#b83232"><span>6</span></div></div><span class="fcnt">6</span></div>
-        <div class="frow"><span class="flbl">Proposal sent</span><div class="fbwrap" onclick="showModal('proposals')"><div class="fbar" style="width:5.3%;background:#9a5f0f"><span>4</span></div></div><span class="fcnt">4</span></div>
-        <div class="frow"><span class="flbl">Technical eval</span><div class="fbwrap" onclick="showModal('gdrfa')"><div class="fbar" style="width:4%;background:#1d4f7c"><span>3</span></div></div><span class="fcnt">3</span></div>
-        <div class="frow"><span class="flbl">Demo / POC</span><div class="fbwrap" onclick="showModal('demo-poc')"><div class="fbar" style="width:5.3%;background:#4a3fa0"><span>4</span></div></div><span class="fcnt">4</span></div>
-        <div class="frow"><span class="flbl">Discovery / warm</span><div class="fbwrap" onclick="showModal('discovery')"><div class="fbar" style="width:13.3%;background:#475569"><span>10</span></div></div><span class="fcnt">10</span></div>
-        <div class="frow"><span class="flbl">Outreach — awaiting mtg</span><div class="fbwrap" onclick="showModal('outreach')"><div class="fbar" style="width:53.3%;background:#94a3b8"><span style="color:#1e293b">40+</span></div></div><span class="fcnt">40+</span></div>
-        <div class="frow"><span class="flbl">All April accounts</span><div class="fbwrap" onclick="showModal('april-all')"><div class="fbar" style="width:100%;background:#dde3ed"><span style="color:#475569">79 total</span></div></div><span class="fcnt">79</span></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-t">Pipeline distribution — by product</div>
-      <div class="card-s">% share of total AED 1.18M · Click segment for details</div>
-      <div class="leg">
-        <span><span class="lsq" style="background:#153a5e"></span>Sangfor 56%</span>
-        <span><span class="lsq" style="background:#b83232"></span>SimuPhish 35%</span>
-        <span><span class="lsq" style="background:#076e52"></span>Acronis 10%</span>
-        <span><span class="lsq" style="background:#475569"></span>CCTV P2 4%</span>
-        <span><span class="lsq" style="background:#9a5f0f"></span>Trend Micro 2%</span>
-      </div>
-      <div class="chart-w" style="height:230px"><canvas id="c4"></canvas></div>
-      <div class="chart-click-hint">Click any segment for product details</div>
-    </div>
-  </div>
-
-  <div class="sec">Month-on-Month KPI Summary</div>
-  <div class="mo-grid">
-    <div class="mo-col">
-      <div class="mo-m">Jan – Feb 2026</div>
-      <div class="mo-r"><span class="mo-k">Active opps</span><span class="mo-v">6</span></div>
-      <div class="mo-r"><span class="mo-k">New meetings</span><span class="mo-v">~20</span></div>
-      <div class="mo-r"><span class="mo-k">POCs initiated</span><span class="mo-v">2</span></div>
-      <div class="mo-r"><span class="mo-k">Proposals sent</span><span class="mo-v">2</span></div>
-      <div class="mo-div"></div>
-      <div class="mo-r"><span class="mo-k">Deals closed</span><span class="mo-v">0</span></div>
-      <div class="mo-r"><span class="mo-k">Pipeline (AED)</span><span class="mo-v">504K</span></div>
-      <div class="mo-r"><span class="mo-k">Cold emails</span><span class="mo-v">~300</span></div>
-    </div>
-    <div class="mo-col">
-      <div class="mo-m">March 2026</div>
-      <div class="mo-r"><span class="mo-k">Active opps</span><span class="mo-v">13 <span class="du">+117%</span></span></div>
-      <div class="mo-r"><span class="mo-k">New meetings</span><span class="mo-v">12 <span class="du">+500%</span></span></div>
-      <div class="mo-r"><span class="mo-k">POCs initiated</span><span class="mo-v">0 <span class="dd">—</span></span></div>
-      <div class="mo-r"><span class="mo-k">Proposals sent</span><span class="mo-v">4 <span class="du">+100%</span></span></div>
-      <div class="mo-div"></div>
-      <div class="mo-r"><span class="mo-k">Deals closed</span><span class="mo-v" style="color:var(--teal)">2 &#10003; First wins</span></div>
-      <div class="mo-r"><span class="mo-k">Pipeline (AED)</span><span class="mo-v">680K <span class="du">+35%</span></span></div>
-      <div class="mo-r"><span class="mo-k">Cold emails</span><span class="mo-v">~750</span></div>
-    </div>
-    <div class="mo-col cur" style="cursor:pointer" onclick="showModal('april-won-kpi')">
-      <div class="mo-m c">April 2026 — Final</div>
-      <div class="mo-r"><span class="mo-k">Active opps</span><span class="mo-v">34 <span class="du">+162%</span></span></div>
-      <div class="mo-r"><span class="mo-k">Outreach accounts</span><span class="mo-v">79 <span class="du">+508%</span></span></div>
-      <div class="mo-r"><span class="mo-k">POCs initiated</span><span class="mo-v">1 <span class="du">Sharlu</span></span></div>
-      <div class="mo-r"><span class="mo-k">Proposals sent</span><span class="mo-v">3+ active</span></div>
-      <div class="mo-div"></div>
-      <div class="mo-r"><span class="mo-k">Deals closed won</span><span class="mo-v" style="color:var(--teal)">3 &#10003; — click to view</span></div>
-      <div class="mo-r"><span class="mo-k">Pipeline (AED)</span><span class="mo-v">1.18M <span class="du">+74%</span></span></div>
-      <div class="mo-r"><span class="mo-k">Cold emails</span><span class="mo-v">Ongoing</span></div>
-    </div>
-    <div class="mo-col up">
-      <div class="mo-m">May 2026 — Upcoming</div>
-      <div style="font-size:11.5px;color:var(--hint);line-height:1.7;margin-top:4px">
-        Data to be added end of May.<br><br>
-        Key targets:<br>
-        · GDRFA SimuPhish (AED 416K)<br>
-        · Al Danube Acronis M365 (AED 63K)<br>
-        · Education sector POCs (AED 581K)<br>
-        · Target pipeline: AED 2M+
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- JAN-FEB -->
-<div id="tab-janfeb" class="panel">
-  <div class="kpi-grid">
-    <div class="kpi bl-n" onclick="showModal('jf-opps')"><div class="kpi-lbl">Active Opportunities</div><div class="kpi-val">6</div><div class="kpi-sub neu">Jan–Feb combined</div><div class="kpi-click">&#x2B0C; Click to see accounts</div></div>
-    <div class="kpi bl-n"><div class="kpi-lbl">Pipeline Value</div><div class="kpi-val">AED 504K</div><div class="kpi-sub neu">USD 137K equivalent</div></div>
-    <div class="kpi bl-t"><div class="kpi-lbl">POCs Initiated</div><div class="kpi-val">2</div><div class="kpi-sub neu">Acronis accounts</div></div>
-    <div class="kpi bl-t"><div class="kpi-lbl">Proposals Submitted</div><div class="kpi-val">2</div><div class="kpi-sub neu">SimuPhish proposals</div></div>
-    <div class="kpi bl-a"><div class="kpi-lbl">Customer Meetings (Jan)</div><div class="kpi-val">4–5/wk</div><div class="kpi-sub neu">Reduced in Feb — injury</div></div>
-    <div class="kpi bl-a"><div class="kpi-lbl">Cold Emails Sent</div><div class="kpi-val">~300</div><div class="kpi-sub neu">3.5% response rate</div></div>
-    <div class="kpi bl-r"><div class="kpi-lbl">Deals Closed</div><div class="kpi-val">0</div><div class="kpi-sub neu">Pipeline carried to March</div></div>
-    <div class="kpi bl-r"><div class="kpi-lbl">SimuPhish Won</div><div class="kpi-val">1</div><div class="kpi-sub up">Feb close</div></div>
-  </div>
-  <div class="sec">Activity metrics &amp; account detail</div>
-  <div class="row2">
-    <div class="card">
-      <div class="card-t">Activity metrics — weekly averages</div>
-      <div class="card-s">Jan vs Feb · Note: Feb reduced due to mobility issue</div>
-      <div class="chart-w" style="height:240px"><canvas id="jf1"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-t">Funnel stage summary</div>
-      <div class="card-s">20 accounts tracked · Click bars to drill down</div>
-      <div style="margin-top:12px">
-        <div class="frow"><span class="flbl">Discussion / active</span><div class="fbwrap" onclick="showModal('jf-opps')"><div class="fbar" style="width:25%;background:#153a5e"><span>5</span></div></div><span class="fcnt">5</span></div>
-        <div class="frow"><span class="flbl">POC initiated</span><div class="fbwrap"><div class="fbar" style="width:10%;background:#076e52"><span>2</span></div></div><span class="fcnt">2</span></div>
-        <div class="frow"><span class="flbl">Proposal submitted</span><div class="fbwrap"><div class="fbar" style="width:10%;background:#9a5f0f"><span>2</span></div></div><span class="fcnt">2</span></div>
-        <div class="frow"><span class="flbl">Warm / prospect</span><div class="fbwrap"><div class="fbar" style="width:40%;background:#475569"><span>8</span></div></div><span class="fcnt">8</span></div>
-        <div class="frow"><span class="flbl">Cold / unengaged</span><div class="fbwrap"><div class="fbar" style="width:100%;background:#cbd5e1"><span style="color:#334155">5+</span></div></div><span class="fcnt">5+</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="sec">Account detail — Jan–Feb 2026</div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Account</th><th>Product</th><th>Stage</th><th>Value (USD)</th><th>Meeting Date</th><th>Owner</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td class="fw">SIPS</td><td>Sangfor IAG + SimuPhish</td><td><span class="pill p-warm">Discussion</span></td><td class="mono">15,000</td><td>Awaiting POC</td><td>Ali</td><td>Awaiting management POC meeting</td></tr>
-        <tr><td class="fw">Bloomington</td><td>Sangfor IAG + SimuPhish</td><td><span class="pill p-warm">Discussion</span></td><td class="mono">30,000</td><td>Pain point ongoing</td><td>Ali</td><td>Highlight pain point &amp; solution</td></tr>
-        <tr><td class="fw">AISchool Curriculum</td><td>WAF + IAG</td><td><span class="pill p-cold">Mtg to Schedule</span></td><td class="mono">22,000</td><td>Busy internally</td><td>Ali</td><td>Attended Sangfor event</td></tr>
-        <tr><td class="fw">Paramount Group of Schools</td><td>IAG</td><td><span class="pill p-warm">Discussion</span></td><td class="mono">30,000</td><td>2 contacts unavailable</td><td>Ali</td><td>Waiting for update</td></tr>
-        <tr><td class="fw">Royal Academy School</td><td>IAG</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">15,000</td><td>Ref from Bloomington</td><td>Ali</td><td>Discussion initiated</td></tr>
-        <tr><td class="fw">Philadelphia Private School</td><td>IAG + CCTV P2</td><td><span class="pill p-warm">Warm Lead</span></td><td class="mono">25,000</td><td>Waiting IT Director</td><td>Ali</td><td>POC discussion</td></tr>
-        <tr><td class="fw">MBZUH</td><td>IAG</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">—</td><td>—</td><td>Ali</td><td>Patched with Head of IT Moqbel</td></tr>
-        <tr><td class="fw">GEMS Dubai American Academy</td><td>IAG</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">—</td><td>—</td><td>Ali</td><td>Under discussion</td></tr>
-        <tr><td class="fw">Al Itihad School Jumeirah</td><td>IAG</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">—</td><td>—</td><td>Ali</td><td>Under discussion</td></tr>
-        <tr><td class="fw">EIS Jumeirah</td><td>IAG</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">—</td><td>—</td><td>Ali</td><td>Under discussion</td></tr>
-        <tr><td class="fw">EIS Meadows</td><td>IAG</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">—</td><td>—</td><td>Ali</td><td>Under discussion</td></tr>
-        <tr><td class="fw">Dubai Gem Private School</td><td>IAG</td><td><span class="pill p-cold">Cold Lead</span></td><td class="mono">—</td><td>Patched with IT head</td><td>Ali</td><td>POC discussion active</td></tr>
-        <tr><td class="fw">Khamas Group</td><td>IAG + MDR</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">—</td><td>—</td><td>Ali</td><td>Via distributor</td></tr>
-        <tr><td class="fw">SP Jain</td><td>IAG</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">—</td><td>—</td><td>Ali</td><td>Not connected yet</td></tr>
-        <tr><td class="fw">Ajman Chamber</td><td>MDR</td><td><span class="pill p-cold">Cold Lead</span></td><td class="mono">—</td><td>—</td><td>Enayat</td><td>Enayat managing</td></tr>
-        <tr><td class="fw">Mada Media</td><td>Sangfor</td><td><span class="pill p-cold">Cold Lead</span></td><td class="mono">—</td><td>—</td><td>Enayat</td><td>Enayat managing</td></tr>
-        <tr><td class="fw">Union Corp</td><td>Acronis</td><td><span class="pill p-cold">Cold Lead</span></td><td class="mono">—</td><td>—</td><td>Enayat</td><td>Under discussion</td></tr>
-        <tr class="total-row"><td colspan="3">Total Pipeline (AED)</td><td class="mono">504,160</td><td colspan="3"></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- MARCH -->
-<div id="tab-march" class="panel">
-  <div class="kpi-grid">
-    <div class="kpi bl-t" onclick="showModal('march-opps')"><div class="kpi-lbl">Active Opportunities</div><div class="kpi-val">13</div><div class="kpi-sub up">&#9650; +117% vs Jan–Feb</div><div class="kpi-click">&#x2B0C; Click to see accounts</div></div>
-    <div class="kpi bl-t"><div class="kpi-lbl">Pipeline Value</div><div class="kpi-val">AED 680K</div><div class="kpi-sub up">&#9650; +35% month on month</div></div>
-    <div class="kpi bl-n"><div class="kpi-lbl">New Meetings</div><div class="kpi-val">12</div><div class="kpi-sub up">&#9650; +500% vs Jan–Feb</div></div>
-    <div class="kpi bl-n"><div class="kpi-lbl">Proposals Submitted</div><div class="kpi-val">4</div><div class="kpi-sub up">&#9650; +100%</div></div>
-    <div class="kpi bl-r" onclick="showModal('march-won')"><div class="kpi-lbl">Deals Closed Won</div><div class="kpi-val">2</div><div class="kpi-sub up">First closures ever</div><div class="kpi-click">&#x2B0C; Click to see deals</div></div>
-    <div class="kpi bl-r"><div class="kpi-lbl">Revenue Closed (AED)</div><div class="kpi-val">15,000</div><div class="kpi-sub up">SIPS + AL Qasimi</div></div>
-    <div class="kpi bl-a" onclick="showModal('hot-deals')"><div class="kpi-lbl">HOT Deals</div><div class="kpi-val">3</div><div class="kpi-sub neu">GDRFA · Oasis · Safety</div><div class="kpi-click">&#x2B0C; Click to see HOT deals</div></div>
-    <div class="kpi bl-a"><div class="kpi-lbl">At Final Stage</div><div class="kpi-val">2</div><div class="kpi-sub neu">SIPS &amp; AL Qasimi Acronis</div></div>
-  </div>
-  <div class="sec">March performance</div>
-  <div class="row2">
-    <div class="card">
-      <div class="card-t">March KPI vs Jan–Feb baseline</div>
-      <div class="card-s">Month-on-month improvement · Click bars for detail</div>
-      <div class="chart-w" style="height:240px"><canvas id="m1"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-t">March pipeline by stage (AED)</div>
-      <div class="card-s">Value concentration across stages · Click for detail</div>
-      <div class="chart-w" style="height:240px"><canvas id="m2"></canvas></div>
-    </div>
-  </div>
-  <div class="sec">Account detail — March 2026</div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Account</th><th>Product</th><th>Stage</th><th>Value (AED)</th><th>Expected Close</th><th>Owner</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td class="fw">SIPS</td><td>Trend Micro</td><td><span class="pill p-won">Won</span></td><td class="mono">13,000</td><td>24 Mar 2026</td><td>Ali</td><td>PO received</td></tr>
-        <tr><td class="fw">AL Qasimi Group</td><td>Trend Micro</td><td><span class="pill p-won">Won</span></td><td class="mono">2,000</td><td>24 Mar 2026</td><td>Ali</td><td>PO received</td></tr>
-        <tr><td class="fw">GDRFA</td><td>SimuPhish</td><td><span class="pill p-hot">HOT — Negotiation</span></td><td class="mono">416,000</td><td>End Apr 2026</td><td>Ali</td><td>Commercial + technical proposal under review</td></tr>
-        <tr><td class="fw">Oasis Freezone</td><td>Trend Micro</td><td><span class="pill p-hot">HOT — Negotiation</span></td><td class="mono">12,000</td><td>Mid Apr 2026</td><td>Rasheeda/Ali</td><td>Solution proposed</td></tr>
-        <tr><td class="fw">Safety Electricals</td><td>Acronis</td><td><span class="pill p-hot">HOT — Negotiation</span></td><td class="mono">3,000</td><td>2nd Wk Apr</td><td>Ali</td><td>On-prem backup solution</td></tr>
-        <tr><td class="fw">SIPS</td><td>Acronis Renewal</td><td><span class="pill p-eval">At Final Stage</span></td><td class="mono">20,000</td><td>End Apr 2026</td><td>Ali</td><td>Transitioning to MSSP model</td></tr>
-        <tr><td class="fw">AL Qasimi Group</td><td>Acronis Backup</td><td><span class="pill p-eval">At Final Stage</span></td><td class="mono">9,000</td><td>End Apr 2026</td><td>Ali</td><td>Group of 5 orgs on backup</td></tr>
-        <tr><td class="fw">Philadelphia Private School</td><td>Sangfor IAG</td><td><span class="pill p-warm">Warm Lead</span></td><td class="mono">55,000</td><td>TBD</td><td>Ali</td><td>IT Director meeting pending</td></tr>
-        <tr><td class="fw">Philadelphia Private School</td><td>CCTV P2</td><td><span class="pill p-warm">Warm Lead</span></td><td class="mono">47,000</td><td>TBD</td><td>Ali</td><td>IT Director meeting pending</td></tr>
-        <tr><td class="fw">Glendale International School</td><td>Sangfor IAG</td><td><span class="pill p-warm">Warm — POC Soon</span></td><td class="mono">55,000</td><td>TBD</td><td>Attari/Ali</td><td>DR done, POC soon</td></tr>
-        <tr><td class="fw">Global Indian Schools</td><td>Sangfor IAG</td><td><span class="pill p-warm">Warm — POC Soon</span></td><td class="mono">55,000</td><td>TBD</td><td>Attari/Ali</td><td>DR done, POC soon</td></tr>
-        <tr><td class="fw">IISP</td><td>Sangfor IAG</td><td><span class="pill p-warm">Warm — POC Soon</span></td><td class="mono">55,000</td><td>TBD</td><td>Attari/Ali</td><td>DR done, POC soon</td></tr>
-        <tr><td class="fw">Bloomington</td><td>Sangfor IAG</td><td><span class="pill p-warm">POC Discussion</span></td><td class="mono">110,400</td><td>TBD</td><td>Ali</td><td>Pain point discussion ongoing</td></tr>
-        <tr><td class="fw">Paramount Group of Schools</td><td>Sangfor IAG</td><td><span class="pill p-warm">1st Meeting Done</span></td><td class="mono">110,400</td><td>TBD</td><td>Ali</td><td>2 contacts unavailable</td></tr>
-        <tr><td class="fw">AISchool Curriculum</td><td>WAF + IAG</td><td><span class="pill p-cold">Meeting on Hold</span></td><td class="mono">80,960</td><td>TBD</td><td>—</td><td>Busy internally</td></tr>
-        <tr><td class="fw">Royal Academy School</td><td>Sangfor IAG</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">55,200</td><td>TBD</td><td>—</td><td>Ref from Bloomington</td></tr>
-        <tr><td class="fw">Dubai Gem Private School</td><td>Sangfor IAG</td><td><span class="pill p-warm">Warm Lead</span></td><td class="mono">13,001</td><td>—</td><td>Ali</td><td>POC under discussion</td></tr>
-        <tr><td class="fw">Ajman Chamber</td><td>Sangfor MDR</td><td><span class="pill p-cold">Cold Lead</span></td><td class="mono">12,001</td><td>—</td><td>Enayat</td><td>Enayat managing</td></tr>
-        <tr><td class="fw">Union Corp</td><td>Acronis</td><td><span class="pill p-cold">Cold Lead</span></td><td class="mono">3,001</td><td>—</td><td>Enayat</td><td>Under discussion</td></tr>
-        <tr class="total-row"><td colspan="3">Total Pipeline (AED)</td><td class="mono">1,184,164</td><td colspan="3"></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- PRODUCT PIPELINE -->
-<div id="tab-pipeline" class="panel">
-  <div class="kpi-grid">
-    <div class="kpi bl-n"><div class="kpi-lbl">Total Active Opps</div><div class="kpi-val">22</div><div class="kpi-sub neu">Across 5 products</div></div>
-    <div class="kpi bl-n"><div class="kpi-lbl">Total Pipeline</div><div class="kpi-val">AED 1.18M</div><div class="kpi-sub neu">Jan–Apr cumulative</div></div>
-    <div class="kpi bl-t"><div class="kpi-lbl">Active POCs</div><div class="kpi-val">2</div><div class="kpi-sub neu">Acronis accounts</div></div>
-    <div class="kpi bl-t"><div class="kpi-lbl">Proposals Out</div><div class="kpi-val">6</div><div class="kpi-sub neu">4 products covered</div></div>
-    <div class="kpi bl-r" onclick="showModal('deals-won-all')"><div class="kpi-lbl">Closed Won</div><div class="kpi-val">3</div><div class="kpi-sub up">All Trend Micro &amp; MailStore</div><div class="kpi-click">&#x2B0C; Click to view all 3 wins</div></div>
-    <div class="kpi bl-r"><div class="kpi-lbl">Overall Win Rate</div><div class="kpi-val">13.6%</div><div class="kpi-sub neu">Based on opps ratio</div></div>
-    <div class="kpi bl-a"><div class="kpi-lbl">Trend Micro Win Rate</div><div class="kpi-val">67%</div><div class="kpi-sub up">Best performing product</div></div>
-    <div class="kpi bl-a" onclick="showModal('sangfor-pipe')"><div class="kpi-lbl">Sangfor Pipeline</div><div class="kpi-val">AED 659K</div><div class="kpi-sub neu">Largest product line</div><div class="kpi-click">&#x2B0C; Click to see accounts</div></div>
-  </div>
-  <div class="sec">Product scorecard</div>
-  <div class="tbl-wrap" style="margin-bottom:1.5rem">
-    <table class="tbl">
-      <thead><tr><th>Product</th><th>Active Opps</th><th>Pipeline (AED)</th><th>POCs Active</th><th>Proposals Out</th><th>Closed Won</th><th>Win Rate</th><th>Status</th><th>Next Action</th></tr></thead>
-      <tbody>
-        <tr><td class="fw" style="cursor:pointer;color:var(--navy2)" onclick="showModal('sangfor-pipe')">Sangfor IAG / WAF / MDR &#x2B0C;</td><td>12</td><td class="mono">659,163</td><td>0</td><td>0</td><td>0</td><td>0%</td><td><span class="pill p-warm">POC pipeline</span></td><td>Schools reopen 14 Apr</td></tr>
-        <tr><td class="fw" style="cursor:pointer;color:var(--navy2)" onclick="showModal('acronis-pipe')">Acronis Backup / DR &#x2B0C;</td><td>5</td><td class="mono">113,001</td><td>2</td><td>1</td><td>0</td><td>0%</td><td><span class="pill p-eval">POC active</span></td><td>Al Danube + Sharlu close May</td></tr>
-        <tr><td class="fw" style="cursor:pointer;color:var(--navy2)" onclick="showModal('gdrfa')">SimuPhish &#x2B0C;</td><td>2</td><td class="mono">416,000</td><td>0</td><td>2</td><td>0</td><td>0%</td><td><span class="pill p-hot">GDRFA evaluation</span></td><td>Support eval — close April</td></tr>
-        <tr><td class="fw" style="cursor:pointer;color:var(--navy2)" onclick="showModal('deals-won-all')">Trend Micro EPP / XDR &#x2B0C;</td><td>2</td><td class="mono">25,000</td><td>0</td><td>2</td><td>3</td><td>67%</td><td><span class="pill p-won">Best performer</span></td><td>Push Oasis to PO</td></tr>
-        <tr><td class="fw">CCTV P2</td><td>1</td><td class="mono">47,000</td><td>0</td><td>1</td><td>0</td><td>0%</td><td><span class="pill p-warm">Warm</span></td><td>Philadelphia IT Director</td></tr>
-        <tr class="total-row"><td>Total / Weighted avg</td><td>22</td><td class="mono">1,260,164</td><td>2</td><td>6</td><td>3</td><td>13.6%</td><td colspan="2"></td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="row2">
-    <div class="card">
-      <div class="card-t">Pipeline value by product (AED)</div>
-      <div class="card-s">Click any bar for product account detail</div>
-      <div class="chart-w" style="height:230px"><canvas id="pp1"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-t">Active opportunities by product</div>
-      <div class="card-s">Click any bar for account list</div>
-      <div class="chart-w" style="height:230px"><canvas id="pp2"></canvas></div>
-    </div>
-  </div>
-</div>
-
-<!-- APRIL REPORT -->
-<div id="tab-april" class="panel">
-  <div class="kpi-grid">
-    <div class="kpi bl-n" onclick="showModal('april-all')"><div class="kpi-lbl">Total Accounts April</div><div class="kpi-val">79</div><div class="kpi-sub up">&#9650; Largest month to date</div><div class="kpi-click">&#x2B0C; Click to see all 79 accounts</div></div>
-    <div class="kpi bl-t" onclick="showModal('april-won')"><div class="kpi-lbl">Deals Won in April</div><div class="kpi-val">3</div><div class="kpi-sub up">AED 18,800 revenue closed</div><div class="kpi-click">&#x2B0C; Click to see all 3 deals</div></div>
-    <div class="kpi bl-r" onclick="showModal('hot-deals')"><div class="kpi-lbl">HOT Deals Active</div><div class="kpi-val">6</div><div class="kpi-sub up">AED 489K combined value</div><div class="kpi-click">&#x2B0C; Click to see HOT deals</div></div>
-    <div class="kpi bl-r" onclick="showModal('gdrfa')"><div class="kpi-lbl">GDRFA SimuPhish</div><div class="kpi-val">AED 416K</div><div class="kpi-sub up">Technical evaluation active</div><div class="kpi-click">&#x2B0C; Click for full detail</div></div>
-    <div class="kpi bl-a" onclick="showModal('outreach')"><div class="kpi-lbl">Outreach Accounts</div><div class="kpi-val">55+</div><div class="kpi-sub neu">Intro done — awaiting F2F</div><div class="kpi-click">&#x2B0C; Click to see list</div></div>
-    <div class="kpi bl-a" onclick="showModal('education')"><div class="kpi-lbl">Education Schools</div><div class="kpi-val">8</div><div class="kpi-sub neu">Warm — resume post 14 Apr</div><div class="kpi-click">&#x2B0C; Click to see schools</div></div>
-    <div class="kpi bl-n"><div class="kpi-lbl">New Accounts Added</div><div class="kpi-val">7+</div><div class="kpi-sub up">vs 2 new in Jan–Feb</div></div>
-    <div class="kpi bl-n" onclick="showModal('al-danube')"><div class="kpi-lbl">Al Danube</div><div class="kpi-val">AED 63K</div><div class="kpi-sub up">New HOT — Acronis M365</div><div class="kpi-click">&#x2B0C; Click for deal detail</div></div>
-  </div>
-
-  <div style="display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:1rem">
-    <div class="filter-bar" style="margin-bottom:0">
-      <span class="fl">Filter:</span>
-      <button class="fbtn on" onclick="filterApril('ALL',this)">All (79)</button>
-      <button class="fbtn" onclick="filterApril('WON',this)">Won (3)</button>
-      <button class="fbtn" onclick="filterApril('HOT',this)">HOT (6)</button>
-      <button class="fbtn" onclick="filterApril('WARM',this)">Warm</button>
-      <button class="fbtn" onclick="filterApril('Cold',this)">Cold</button>
-      <button class="fbtn" onclick="filterApril('ALI',this)">Ali only</button>
-      <button class="fbtn" onclick="filterApril('OUTREACH',this)">Outreach</button>
-      <button class="fbtn" onclick="filterApril('VALUE',this)">Has value</button>
-    </div>
-    <div class="search-wrap" style="margin-bottom:0">
-      <span class="search-icon">&#9906;</span>
-      <input type="text" id="apr-search" placeholder="Search account or product..." oninput="searchApril(this.value)">
-    </div>
-  </div>
-
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>#</th><th>Account</th><th>Product</th><th>Stage</th><th>Temp</th><th>Value (AED)</th><th>POC Date</th><th>Proposal Date</th><th>Expected Close</th><th>Owner</th><th>Notes</th></tr></thead>
-      <tbody id="april-tbody"></tbody>
-    </table>
-  </div>
-  <div class="pag" id="apr-pag"></div>
-
-  <div class="sec" style="margin-top:2rem">April breakdown charts — click any segment or bar for drill-down</div>
-  <div class="row3">
-    <div class="card">
-      <div class="card-t">Lead temperature breakdown</div>
-      <div class="card-s">79 total accounts · Click segment</div>
-      <div class="chart-w" style="height:200px"><canvas id="ap1"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-t">Pipeline stage distribution</div>
-      <div class="card-s">Account count by stage · Click bar</div>
-      <div class="chart-w" style="height:200px"><canvas id="ap2"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-t">Top value deals — April (AED)</div>
-      <div class="card-s">Accounts with confirmed value · Click bar</div>
-      <div class="chart-w" style="height:200px"><canvas id="ap3"></canvas></div>
-    </div>
-  </div>
-
-  <div class="sec">30-day action plan — April / May 2026</div>
-  <div class="actn-grid">
-    <div class="actn-card">
-      <div class="actn-hdr"><span class="actn-t">P1 — Critical actions</span><span class="bdg b1">CRITICAL</span></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#b83232"></div><div><div class="ai-txt">Close Safety Electricals Acronis — NAS at second site pending; deploy immediately after</div><div class="ai-dt">Target: Before 15 Apr</div></div></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#b83232"></div><div><div class="ai-txt">Advance Oasis Freezone to PO — demo complete, tenant live, Shabbir Saqid engaged</div><div class="ai-dt">Target: 20 Apr (revised)</div></div></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#b83232"></div><div><div class="ai-txt">GDRFA SimuPhish AED 416K — support technical evaluation, provide clarifications, close April</div><div class="ai-dt">Target: 30 Apr</div></div></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#b83232"></div><div><div class="ai-txt">Chase Sharlu for client details — initiate Acronis Backup + Email Sec + Archiving POC</div><div class="ai-dt">Target: Before 10 Apr</div></div></div>
-    </div>
-    <div class="actn-card">
-      <div class="actn-hdr"><span class="actn-t">P2 — High priority</span><span class="bdg b2">HIGH</span></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#9a5f0f"></div><div><div class="ai-txt">Re-engage all 8 education schools — schedule IAG POC sessions (AED 581K pipeline)</div><div class="ai-dt">After 15 Apr</div></div></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#9a5f0f"></div><div><div class="ai-txt">Philadelphia IT Director meeting — unlock AED 102K deal (IAG + CCTV P2)</div><div class="ai-dt">After 20 Apr</div></div></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#9a5f0f"></div><div><div class="ai-txt">Close SIPS Acronis Renewal + AL Qasimi Backup — both at final stage, AED 29K combined</div><div class="ai-dt">By 30 Apr</div></div></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#9a5f0f"></div><div><div class="ai-txt">Advance Al Danube Acronis M365 — price negotiation active, AED 63K</div><div class="ai-dt">1st week May</div></div></div>
-    </div>
-    <div class="actn-card">
-      <div class="actn-hdr"><span class="actn-t">P3 — Normal pipeline</span><span class="bdg b3">NORMAL</span></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#475569"></div><div><div class="ai-txt">SME / Healthcare outreach — 100+ new targets, tech-refresh campaign (free Sangfor firewall + 3yr subscription)</div><div class="ai-dt">5 new qualified opps by 30 Apr</div></div></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#475569"></div><div><div class="ai-txt">NetViss portfolio — convert 30+ outreach accounts to F2F qualified meetings</div><div class="ai-dt">May pipeline prep</div></div></div>
-      <div class="ai-row"><div class="ai-dot" style="background:#475569"></div><div><div class="ai-txt">Koj Interior, Habitat School, SZ Group — follow up connected leads</div><div class="ai-dt">Next week</div></div></div>
-    </div>
-    <div class="actn-card">
-      <div class="actn-hdr"><span class="actn-t">Risks &amp; opportunities</span></div>
-      <div class="rp"><div class="rc rc-r"><div class="rt rt-r">Risk</div><div class="rtxt">Education AED 581K on hold — school closures, external factor not execution</div></div><div class="rc rc-o"><div class="rt rt-o">Opportunity</div><div class="rtxt">UAE Govt IAG mandate — strong Q2 tailwind for education pipeline</div></div></div>
-      <div class="rp"><div class="rc rc-r"><div class="rt rt-r">Risk</div><div class="rtxt">GDRFA AED 416K — single deal concentration, evaluation extending</div></div><div class="rc rc-o"><div class="rt rt-o">Opportunity</div><div class="rtxt">Al Danube AED 63K — new high-value account, proposal submitted</div></div></div>
-      <div class="rp" style="margin-bottom:0"><div class="rc rc-r"><div class="rt rt-r">Risk</div><div class="rtxt">Safety Elec NAS dependency — external, monitor closely</div></div><div class="rc rc-o"><div class="rt rt-o">Opportunity</div><div class="rtxt">79 outreach accounts — largest monthly expansion, funnel widened significantly</div></div></div>
-    </div>
-  </div>
-</div>
-
-</div>
-<div class="footer" style="max-width:1260px;margin:0 auto;padding:0 2rem 2rem">Visiontech UAE &nbsp;·&nbsp; MSSP Business Unit &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; Prepared by Ali Gheeya &nbsp;·&nbsp; Data as at 30 April 2026</div>
 
 <script>
-// ═══ DATA ══════════════════════════════════════════════════════════════════
-const aprilData=[
-  {n:1,account:'SIPS',product:'Trend Micro',stage:'WON',temp:'WON',value:13000,poc:'Not Required',proposal:'23 Mar 2026',close:'CLOSED WON',owner:'Ali',notes:'PO received. Upsell: Acronis renewal transitioning to MSSP model'},
-  {n:2,account:'AL Qasimi Group',product:'Trend Micro',stage:'WON',temp:'WON',value:2000,poc:'Not Required',proposal:'23 Mar 2026',close:'CLOSED WON',owner:'Ali',notes:'PO received. Group of 6 orgs — Acronis upsell potential'},
-  {n:3,account:'Quality International',product:'MailStore Renewal',stage:'WON',temp:'WON',value:3800,poc:'—',proposal:'13 Apr 2026',close:'22 Apr 2026',owner:'Ali',notes:'Proposal Sent, PO sent, Invoice Raised, Payment received'},
-  {n:4,account:'Sharlu',product:'Acronis (Backup + Email Sec + Archiving)',stage:'Proposal Sent',temp:'HOT',value:10000,poc:'POC Started',proposal:'—',close:'May 2026',owner:'Ali',notes:'Meeting with Imtiaz done. Requirement gathering complete. Awaiting details for Acronis POC.'},
-  {n:5,account:'Wisdom Consultant',product:'Meeting Room Solution',stage:'Proposal Sent',temp:'WARM',value:10000,poc:'—',proposal:'—',close:'TBD',owner:'Ali',notes:'Received Layout, Proposal Sent, Waiting for Budget approval'},
-  {n:6,account:'Al Danube',product:'Acronis M365',stage:'Proposal Sent',temp:'HOT',value:63000,poc:'—',proposal:'24 Apr 2026',close:'1st Week May',owner:'Ali/Rasheeda',notes:'Price Negotiation ongoing, Waiting for final update'},
-  {n:7,account:'SIPS',product:'Acronis Renewal',stage:'Decision Stage',temp:'HOT',value:20000,poc:'Renewal',proposal:'June Mid',close:'June End',owner:'Ali',notes:'Renewal of Acronis will be done with VT'},
-  {n:8,account:'AL Qasimi Group',product:'Acronis Backup',stage:'Decision Stage',temp:'HOT',value:9000,poc:'Renewal',proposal:'June Mid',close:'June End',owner:'Ali',notes:'Renewal of Acronis will be done with VT'},
-  {n:9,account:'Koj Interior',product:'ICT + Cybersecurity',stage:'Connected / Qualified',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Meeting Next Week'},
-  {n:10,account:'Habitat School',product:'NetViss + IAG + MDR',stage:'Connected',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Meeting Next Week'},
-  {n:11,account:'SZ Group',product:'NetViss + IAG + MDR',stage:'Connected',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Meeting Next Week'},
-  {n:12,account:'Philadelphia Private School',product:'Sangfor IAG + CCTV P2',stage:'Discovery',temp:'WARM',value:102000,poc:'—',proposal:'—',close:'—',owner:'Ali',notes:'IT Director meeting to be scheduled week of 14 Apr'},
-  {n:13,account:'Glendale International School',product:'Sangfor IAG',stage:'Discovery',temp:'WARM',value:55000,poc:'Waiting Approval',proposal:'—',close:'—',owner:'Attari/Ali',notes:'Discovery done. POC discussion underway.'},
-  {n:14,account:'Global Indian Schools',product:'Sangfor IAG',stage:'Discovery',temp:'WARM',value:55000,poc:'Waiting Approval',proposal:'—',close:'—',owner:'Attari/Ali',notes:'Discovery done. POC discussion underway.'},
-  {n:15,account:'IISP',product:'Sangfor IAG',stage:'Discovery',temp:'WARM',value:55000,poc:'Waiting Approval',proposal:'—',close:'—',owner:'Attari/Ali',notes:'Discovery done. POC discussion underway.'},
-  {n:16,account:'SIPS',product:'Sangfor IAG / NetViss',stage:'Demo / POC',temp:'WARM',value:55200,poc:'—',proposal:'—',close:'May 2026',owner:'Ali',notes:'School admin resumes post 14 Apr.'},
-  {n:17,account:'Bloomington',product:'Sangfor IAG / Acronis',stage:'Demo / POC',temp:'WARM',value:110400,poc:'—',proposal:'—',close:'—',owner:'Ali',notes:'Pain point discussions ongoing. POC to be aligned post 14 Apr.'},
-  {n:18,account:'Paramount Group of Schools',product:'Sangfor IAG',stage:'Connected / Qualified',temp:'WARM',value:110400,poc:'—',proposal:'—',close:'—',owner:'Ali',notes:'POC to be scheduled week of 14 Apr.'},
-  {n:19,account:'Royal Academy School',product:'Sangfor IAG',stage:'Connected',temp:'WARM',value:55200,poc:'—',proposal:'—',close:'—',owner:'Ali',notes:'Initiated via referral from Bloomington.'},
-  {n:20,account:'Dubai Gem Private School',product:'Sangfor IAG',stage:'Connected',temp:'WARM',value:13001,poc:'—',proposal:'—',close:'—',owner:'Ali',notes:'IT head engaged. POC discussion active.'},
-  {n:21,account:'Oasis Freezone',product:'Trend Micro',stage:'WARM / HOLD',temp:'HOLD',value:12000,poc:'3 Apr 2026',proposal:'25 Mar 2026',close:'End of May',owner:'Ali/Rasheeda',notes:'Tenant created. Online demo done. Closing underway.'},
-  {n:22,account:'Safety Electricals',product:'Acronis',stage:'WARM',temp:'WARM',value:14000,poc:'—',proposal:'—',close:'—',owner:'Ali',notes:'NAS Storage at other site still Pending'},
-  {n:23,account:'GDRFA',product:'SimuPhish',stage:'Technical Evaluation',temp:'WARM',value:416000,poc:'No POC required',proposal:'17 Mar 2026',close:'End Apr 2026',owner:'Ali',notes:'Formal follow-up sent. Active evaluation. Govt compliance requirement.'},
-  {n:24,account:'Union Corp',product:'Acronis',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'Ali',notes:'Under discussion'},
-  {n:25,account:'IHCC',product:'Multiple ITC / Cybersecurity / AV',stage:'Outreach Done',temp:'Cold',value:0,poc:'—',proposal:'—',close:'—',owner:'Ali',notes:'Cold Lead. Initial Intro pitch given to Sr. Procurement. Saudi German Group company.'},
-  {n:26,account:'SNASH General Trading LLC',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:27,account:'Emirates Express General Trading L.L.C',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:28,account:'Bearys Global Ventures RE Dev LLC',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:29,account:'Hamdan Bin Mohammed Heritage Center',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:30,account:'Meraki Integrated Contracting LLC',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:31,account:'Eureka Restaurant & Cafe L.L.C',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:32,account:'Jaquar Middle East LLC',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:33,account:'Jaquar And Company Private Limited',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:34,account:'Focus Softnet FZ LLC',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:35,account:'Lamprell Energy Limited',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:36,account:'Aspect Studios Asia Pty Ltd',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:37,account:'Aqualine General Trading LLC',product:'ICT + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:38,account:'Takaful Emarat Insurance — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:39,account:'Takaful Emarat Insurance — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:40,account:'Takaful Emarat Insurance — C3',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:41,account:'Mandarin Oriental — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:42,account:'Mandarin Oriental — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:43,account:'Mandarin Oriental — C3',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:44,account:'Al Ain Fertility Center',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:45,account:'Al Mawakeb School - Al Barsha',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:46,account:'Parfums de Marly — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:47,account:'Parfums de Marly — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:48,account:'Parfums de Marly — C3',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:49,account:'Al Dahra — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:50,account:'Al Dahra — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:51,account:'Lamprell — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:52,account:'F3 O&M Company Ltd',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:53,account:'Ace Crane Systems — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:54,account:'Ace Crane Systems — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:55,account:'Exeed Industries',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:56,account:'Finance House — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:57,account:'Finance House — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:58,account:'Finance House — C3',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:59,account:'SERGAS Group — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:60,account:'SERGAS Group — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:61,account:'SERGAS Group — C3',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:62,account:'Elite Group Holding — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:63,account:'Elite Group Holding — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:64,account:'Albatha Group — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:65,account:'Albatha Group — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:66,account:'Albatha Group — C3',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:67,account:'Albatha Group — C4',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:68,account:'Elyzee Hospital',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:69,account:'Raibal Holding — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:70,account:'Raibal Holding — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:71,account:'Raibal Holding — C3',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:72,account:'Sobha Modular',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:73,account:'Royal Group LLC — C1',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:74,account:'Royal Group LLC — C2',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:75,account:'Royal Group LLC — C3',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:76,account:'NMDC Infra',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:77,account:'ENGIE Middle East',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:78,account:'SBGC - Sprecher Berrier Group of Companies',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-  {n:79,account:'Abu Dhabi Media Office',product:'NetViss + Cybersecurity',stage:'Outreach Done',temp:'WARM',value:0,poc:'—',proposal:'—',close:'—',owner:'—',notes:'Intro Email and Call Done, Awaiting F2F'},
-];
-
-// ═══ MODAL SYSTEM ══════════════════════════════════════════════════════════
-function openModal(title,sub,bodyHtml){
-  document.getElementById('modal-title').textContent=title;
-  document.getElementById('modal-sub').textContent=sub;
-  document.getElementById('modal-body').innerHTML=bodyHtml;
-  document.getElementById('modal-overlay').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeModal(){
-  document.getElementById('modal-overlay').classList.remove('open');
-  document.body.style.overflow='';
-}
-function closeModalOnBg(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
-
-function pillClass(t){return{WON:'p-won',HOT:'p-hot',WARM:'p-warm',Cold:'p-cold',HOLD:'p-hold'}[t]||'p-cold';}
-function fmtVal(v){return v>0?'AED '+v.toLocaleString():'—';}
-
-function dealCard(d,color='#076e52'){
-  return`<div class="deal-card" style="border-left-color:${color}">
-    <div class="deal-card-hdr">
-      <div class="deal-card-name">${d.account}</div>
-      <div class="deal-card-val">${fmtVal(d.value)}</div>
-    </div>
-    <div style="margin-bottom:6px"><span class="pill ${pillClass(d.temp)}">${d.temp}</span> &nbsp;<span style="font-size:11.5px;color:var(--muted)">${d.product}</span></div>
-    <div class="deal-card-row">
-      <div class="deal-card-field"><strong>Stage:</strong> ${d.stage}</div>
-      <div class="deal-card-field"><strong>Owner:</strong> ${d.owner}</div>
-      <div class="deal-card-field"><strong>Close:</strong> ${d.close}</div>
-      ${d.poc!=='—'?`<div class="deal-card-field"><strong>POC:</strong> ${d.poc}</div>`:''}
-      ${d.proposal!=='—'?`<div class="deal-card-field"><strong>Proposal:</strong> ${d.proposal}</div>`:''}
-    </div>
-    <div style="margin-top:8px;font-size:11.5px;color:var(--hint)">${d.notes}</div>
-  </div>`;
-}
-
-function miniTable(rows){
-  return`<table class="tbl"><thead><tr><th>#</th><th>Account</th><th>Product</th><th>Stage</th><th>Temp</th><th>Value (AED)</th><th>Owner</th><th>Notes</th></tr></thead><tbody>${rows.map(d=>`<tr><td style="color:var(--hint);font-size:10px">${d.n}</td><td class="fw">${d.account}</td><td style="font-size:11.5px">${d.product}</td><td style="font-size:11.5px">${d.stage}</td><td><span class="pill ${pillClass(d.temp)}">${d.temp}</span></td><td class="mono">${fmtVal(d.value)}</td><td>${d.owner}</td><td style="font-size:11px;color:var(--hint)">${d.notes}</td></tr>`).join('')}</tbody></table>`;
-}
-
-function kpiRow(items){
-  return`<div class="modal-kpi-row">${items.map(i=>`<div class="modal-kpi"><div class="modal-kpi-l">${i.l}</div><div class="modal-kpi-v">${i.v}</div></div>`).join('')}</div>`;
-}
-
-// ═══ MODAL CONTENT DEFINITIONS ══════════════════════════════════════════════
-function showModal(type){
-  const won=aprilData.filter(d=>d.temp==='WON');
-  const hot=aprilData.filter(d=>d.temp==='HOT');
-  const sangfor=aprilData.filter(d=>d.product.toLowerCase().includes('sangfor')||d.product.toLowerCase().includes('iag')||d.product.toLowerCase().includes('waf')||d.product.toLowerCase().includes('mdr'));
-  const acronis=aprilData.filter(d=>d.product.toLowerCase().includes('acronis')||d.product.toLowerCase().includes('mailstore'));
-  const education=aprilData.filter(d=>['Philadelphia Private School','Glendale International School','Global Indian Schools','IISP','SIPS','Bloomington','Paramount Group of Schools','Royal Academy School','Dubai Gem Private School'].includes(d.account)&&d.product.toLowerCase().includes('sangfor'));
-  const outreach=aprilData.filter(d=>d.stage.includes('Outreach'));
-  const withVal=aprilData.filter(d=>d.value>0);
-  const discovery=aprilData.filter(d=>d.stage==='Discovery'||d.stage.includes('Connected')||d.stage.includes('Demo'));
-  const proposals=aprilData.filter(d=>d.stage==='Proposal Sent');
-
-  const configs={
-    'april-won':{title:'Deals Closed Won — April 2026',sub:'3 deals closed in April 2026 · Total AED 18,800',body:()=>`
-      <div class="won-banner">&#10003; 3 deals closed in April 2026 — AED 13,000 + AED 2,000 + AED 3,800 = AED 18,800 total revenue</div>
-      ${won.map(d=>dealCard(d,'#076e52')).join('')}
-      <div style="background:#f4f6fa;border-radius:8px;padding:1rem;margin-top:12px;font-size:12.5px;color:var(--muted)">
-        <strong>Note on SIPS &amp; AL Qasimi:</strong> Both deals were closed in March 2026 (Trend Micro POs received 24 Mar) and carried forward as confirmed wins into the April report. Quality International (MailStore Renewal, AED 3,800) is the new April-specific closure with payment received 22 Apr 2026.
-      </div>`},
-    'april-won-kpi':{title:'April 2026 — Deals Won',sub:'3 deals · Total AED 18,800',body:()=>`
-      ${kpiRow([{l:'Total won',v:'3 deals'},{l:'Revenue',v:'AED 18,800'},{l:'New in April',v:'Quality Intl'}])}
-      ${won.map(d=>dealCard(d,'#076e52')).join('')}`},
-    'deals-won-all':{title:'All Deals Closed Won — Jan to Apr 2026',sub:'3 confirmed wins · Total AED 18,800',body:()=>`
-      <div class="won-banner">&#10003; 3 deals closed to date across Jan–Apr 2026 · AED 18,800 total revenue realised</div>
-      ${won.map(d=>dealCard(d,'#076e52')).join('')}`},
-    'revenue':{title:'Revenue Realised — Breakdown',sub:'AED 18,800 across 3 closed deals',body:()=>`
-      ${kpiRow([{l:'Total revenue',v:'AED 18,800'},{l:'Deals',v:'3'},{l:'Products',v:'Trend Micro + MailStore'}])}
-      ${won.map(d=>dealCard(d,'#076e52')).join('')}
-      <div style="margin-top:12px;padding:10px;background:#f4f6fa;border-radius:8px;font-size:12px;color:var(--muted)">Revenue recognised: SIPS AED 13,000 + AL Qasimi AED 2,000 + Quality International AED 3,800 = AED 18,800</div>`},
-    'march-won':{title:'March 2026 — Deals Won',sub:'2 deals · SIPS + AL Qasimi · AED 15,000',body:()=>`
-      ${kpiRow([{l:'Deals won',v:'2'},{l:'Revenue',v:'AED 15,000'},{l:'Product',v:'Trend Micro'}])}
-      ${won.filter(d=>d.account!=='Quality International').map(d=>dealCard(d,'#076e52')).join('')}`},
-    'hot-deals':{title:'HOT Deals — Active Pursuit',sub:`${hot.length} deals · Total AED ${hot.reduce((s,d)=>s+d.value,0).toLocaleString()}`,body:()=>`
-      ${kpiRow([{l:'HOT deals',v:hot.length},{l:'Combined value',v:'AED '+hot.reduce((s,d)=>s+d.value,0).toLocaleString()},{l:'Highest value',v:'GDRFA AED 416K'}])}
-      ${hot.map(d=>dealCard(d,'#b83232')).join('')}`},
-    'gdrfa':{title:'GDRFA — SimuPhish Deal Detail',sub:'AED 416,000 · Technical Evaluation · Largest single deal',body:()=>`
-      ${kpiRow([{l:'Deal value',v:'AED 416,000'},{l:'Stage',v:'Technical Evaluation'},{l:'Product',v:'SimuPhish'},{l:'Target close',v:'End Apr 2026'}])}
-      ${dealCard(aprilData.find(d=>d.account==='GDRFA'),'#b83232')}
-      <div style="background:#fef3e2;border-radius:8px;padding:1rem;margin-top:10px;font-size:12.5px;color:var(--amber)">
-        <strong>Priority note:</strong> This is the single most important deal in the pipeline. Government entity, compliance-driven requirement. RFP submitted on GDRFA Supply portal. Active evaluation in progress. Support any clarification request immediately to maintain momentum.
-      </div>`},
-    'al-danube':{title:'Al Danube — Acronis M365',sub:'AED 63,000 · HOT · Proposal Sent',body:()=>`
-      ${dealCard(aprilData.find(d=>d.account==='Al Danube'),'#9a5f0f')}`},
-    'education':{title:'Education Sector Pipeline',sub:'8 schools · AED 581K combined · Warm — resumes post 14 Apr',body:()=>`
-      ${kpiRow([{l:'Schools',v:'8'},{l:'Pipeline',v:'AED 581K'},{l:'Product',v:'Sangfor IAG'},{l:'Status',v:'Warm — post 14 Apr'}])}
-      <div style="background:#e8f1fb;border-radius:8px;padding:0.875rem 1rem;margin-bottom:12px;font-size:12px;color:var(--eval-txt)">UAE Government IAG mandate is a strong demand tailwind. Schools resuming admin week of 14 Apr — POC scheduling to begin immediately after.</div>
-      ${education.map(d=>dealCard(d,'#1d4f7c')).join('')}`},
-    'april-all':{title:'All April 2026 Accounts',sub:'79 total accounts — full pipeline including outreach',body:()=>`
-      ${kpiRow([{l:'Total accounts',v:'79'},{l:'Won',v:'3'},{l:'HOT',v:hot.length},{l:'With value',v:withVal.length}])}
-      <div style="overflow-x:auto">${miniTable(aprilData)}</div>`},
-    'pipeline-total':{title:'Total Pipeline Breakdown',sub:'AED 1,184,164 across all products',body:()=>`
-      ${kpiRow([{l:'Total',v:'AED 1,184,164'},{l:'Products',v:'5'},{l:'Accounts',v:'22 active'}])}
-      <table class="tbl"><thead><tr><th>Product</th><th>Pipeline (AED)</th><th>Share</th><th>Active Opps</th></tr></thead><tbody>
-        <tr><td class="fw">Sangfor IAG/WAF/MDR</td><td class="mono">659,163</td><td>55.7%</td><td>12</td></tr>
-        <tr><td class="fw">SimuPhish</td><td class="mono">416,000</td><td>35.1%</td><td>2</td></tr>
-        <tr><td class="fw">Acronis Backup/DR</td><td class="mono">113,001</td><td>9.5%</td><td>5</td></tr>
-        <tr><td class="fw">CCTV P2</td><td class="mono">47,000</td><td>4.0%</td><td>1</td></tr>
-        <tr><td class="fw">Trend Micro EPP/XDR</td><td class="mono">27,000</td><td>2.3%</td><td>2</td></tr>
-        <tr class="total-row"><td>Total</td><td class="mono">1,184,164</td><td>100%</td><td>22</td></tr>
-      </tbody></table>`},
-    'active-opps':{title:'Active Opportunities — April 2026',sub:'34 qualified accounts',body:()=>`
-      ${kpiRow([{l:'Active opps',v:'34'},{l:'With value',v:withVal.length},{l:'Total value',v:'AED '+withVal.reduce((s,d)=>s+d.value,0).toLocaleString()}])}
-      <div style="overflow-x:auto">${miniTable(aprilData.filter(d=>!d.stage.includes('Outreach')))}</div>`},
-    'outreach':{title:'Outreach Accounts — Awaiting F2F',sub:`${outreach.length} accounts · Intro done · Next step: F2F meeting`,body:()=>`
-      ${kpiRow([{l:'Total outreach',v:outreach.length},{l:'Products',v:'ICT/Cyber, NetViss'},{l:'Next step',v:'F2F meetings'}])}
-      <div style="overflow-x:auto">${miniTable(outreach)}</div>`},
-    'proposals':{title:'Proposals Currently Active',sub:'4 accounts with proposals submitted',body:()=>`
-      ${proposals.map(d=>dealCard(d,'#9a5f0f')).join('')}`},
-    'demo-poc':{title:'Demo / POC Stage Accounts',sub:'4 accounts in active demo or POC phase',body:()=>`
-      ${aprilData.filter(d=>d.stage.includes('Demo')||d.stage.includes('POC')).map(d=>dealCard(d,'#4a3fa0')).join('')}`},
-    'discovery':{title:'Discovery / Warm Accounts',sub:'10 accounts in discovery or warm stage',body:()=>`
-      <div style="overflow-x:auto">${miniTable(aprilData.filter(d=>d.stage==='Discovery'||d.stage.includes('Connected')||d.stage==='WARM'))}</div>`},
-    'sangfor-pipe':{title:'Sangfor Pipeline Accounts',sub:'AED 659,163 · 12 active opportunities',body:()=>`
-      ${kpiRow([{l:'Pipeline',v:'AED 659,163'},{l:'Accounts',v:'12'},{l:'Status',v:'POC pending 14 Apr'}])}
-      <div style="overflow-x:auto">${miniTable(sangfor)}</div>`},
-    'acronis-pipe':{title:'Acronis Pipeline Accounts',sub:'AED 113,001 · 5 active opportunities',body:()=>`
-      ${kpiRow([{l:'Pipeline',v:'AED 113,001'},{l:'Accounts',v:'5'},{l:'POCs active',v:'2'}])}
-      ${acronis.map(d=>dealCard(d,'#076e52')).join('')}`},
-    'jf-opps':{title:'Jan–Feb Active Opportunities',sub:'6 qualified accounts · AED 504K pipeline',body:()=>`
-      ${kpiRow([{l:'Active opps',v:'6'},{l:'Pipeline',v:'AED 504K'},{l:'POCs',v:'2'}])}
-      <table class="tbl"><thead><tr><th>Account</th><th>Product</th><th>Stage</th><th>Value (USD)</th></tr></thead><tbody>
-        <tr><td class="fw">SIPS</td><td>Sangfor IAG + SimuPhish</td><td><span class="pill p-warm">Discussion</span></td><td class="mono">15,000</td></tr>
-        <tr><td class="fw">Bloomington</td><td>Sangfor IAG + SimuPhish</td><td><span class="pill p-warm">Discussion</span></td><td class="mono">30,000</td></tr>
-        <tr><td class="fw">AISchool Curriculum</td><td>WAF + IAG</td><td><span class="pill p-cold">Pending mtg</span></td><td class="mono">22,000</td></tr>
-        <tr><td class="fw">Paramount Group</td><td>IAG</td><td><span class="pill p-warm">Discussion</span></td><td class="mono">30,000</td></tr>
-        <tr><td class="fw">Royal Academy School</td><td>IAG</td><td><span class="pill p-cold">Prospect</span></td><td class="mono">15,000</td></tr>
-        <tr><td class="fw">Philadelphia Private School</td><td>IAG + CCTV P2</td><td><span class="pill p-warm">Warm Lead</span></td><td class="mono">25,000</td></tr>
-      </tbody></table>`},
-    'march-opps':{title:'March 2026 — Active Opportunities',sub:'13 accounts · AED 680K pipeline',body:()=>`
-      ${kpiRow([{l:'Active opps',v:'13'},{l:'Pipeline',v:'AED 680K'},{l:'Won',v:'2'},{l:'HOT',v:'3'}])}
-      <table class="tbl"><thead><tr><th>Account</th><th>Product</th><th>Stage</th><th>Value (AED)</th></tr></thead><tbody>
-        <tr><td class="fw">SIPS</td><td>Trend Micro</td><td><span class="pill p-won">Won</span></td><td class="mono">13,000</td></tr>
-        <tr><td class="fw">AL Qasimi Group</td><td>Trend Micro</td><td><span class="pill p-won">Won</span></td><td class="mono">2,000</td></tr>
-        <tr><td class="fw">GDRFA</td><td>SimuPhish</td><td><span class="pill p-hot">HOT</span></td><td class="mono">416,000</td></tr>
-        <tr><td class="fw">Oasis Freezone</td><td>Trend Micro</td><td><span class="pill p-hot">HOT</span></td><td class="mono">12,000</td></tr>
-        <tr><td class="fw">Safety Electricals</td><td>Acronis</td><td><span class="pill p-hot">HOT</span></td><td class="mono">3,000</td></tr>
-        <tr><td class="fw">SIPS</td><td>Acronis Renewal</td><td><span class="pill p-eval">Final Stage</span></td><td class="mono">20,000</td></tr>
-        <tr><td class="fw">AL Qasimi Group</td><td>Acronis Backup</td><td><span class="pill p-eval">Final Stage</span></td><td class="mono">9,000</td></tr>
-        <tr><td class="fw">Philadelphia Private School</td><td>Sangfor IAG + CCTV P2</td><td><span class="pill p-warm">Warm</span></td><td class="mono">102,000</td></tr>
-        <tr><td class="fw">Bloomington</td><td>Sangfor IAG</td><td><span class="pill p-warm">POC Discussion</span></td><td class="mono">110,400</td></tr>
-        <tr><td class="fw">Paramount Group</td><td>Sangfor IAG</td><td><span class="pill p-warm">1st Mtg Done</span></td><td class="mono">110,400</td></tr>
-        <tr><td class="fw">Glendale Intl School</td><td>Sangfor IAG</td><td><span class="pill p-warm">Warm</span></td><td class="mono">55,000</td></tr>
-        <tr><td class="fw">Global Indian Schools</td><td>Sangfor IAG</td><td><span class="pill p-warm">Warm</span></td><td class="mono">55,000</td></tr>
-        <tr><td class="fw">IISP</td><td>Sangfor IAG</td><td><span class="pill p-warm">Warm</span></td><td class="mono">55,000</td></tr>
-      </tbody></table>`},
-  };
-
-  const cfg=configs[type];
-  if(!cfg)return;
-  openModal(cfg.title,cfg.sub,cfg.body());
-}
-
-// ═══ TABS ══════════════════════════════════════════════════════════════════
-function showTab(id,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  btn.classList.add('active');
-}
-
-// ═══ APRIL TABLE ═══════════════════════════════════════════════════════════
-let aprFiltered=[...aprilData];
-let aprPage=1;
-const aprPer=20;
-
-function renderApril(){
-  const tb=document.getElementById('april-tbody');
-  const s=(aprPage-1)*aprPer;
-  const pg=aprFiltered.slice(s,s+aprPer);
-  tb.innerHTML=pg.map(d=>`<tr>
-    <td style="color:var(--hint);font-size:10.5px">${d.n}</td>
-    <td class="fw" style="max-width:150px">${d.account}</td>
-    <td style="font-size:11.5px;max-width:150px">${d.product}</td>
-    <td style="font-size:11.5px">${d.stage}</td>
-    <td><span class="pill ${pillClass(d.temp)}">${d.temp}</span></td>
-    <td class="mono">${fmtVal(d.value)}</td>
-    <td style="font-size:11px;color:var(--muted)">${d.poc}</td>
-    <td style="font-size:11px;color:var(--muted)">${d.proposal}</td>
-    <td style="font-size:11px;color:var(--muted)">${d.close}</td>
-    <td style="font-size:11.5px">${d.owner}</td>
-    <td style="font-size:11px;color:var(--hint);max-width:200px">${d.notes}</td>
-  </tr>`).join('');
-  const tot=Math.ceil(aprFiltered.length/aprPer);
-  document.getElementById('apr-pag').innerHTML=`
-    <span class="pag-info">${aprFiltered.length} records &nbsp;·&nbsp; Page ${aprPage} of ${tot}</span>
-    <button class="pag-btn ${aprPage===1?'disabled':''}" onclick="if(aprPage>1){aprPage--;renderApril()}">&#8249; Prev</button>
-    <button class="pag-btn ${aprPage>=tot?'disabled':''}" onclick="if(aprPage<${tot}){aprPage++;renderApril()}">Next &#8250;</button>`;
-}
-
-function filterApril(f,btn){
-  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('apr-search').value='';
-  if(f==='ALL') aprFiltered=[...aprilData];
-  else if(f==='ALI') aprFiltered=aprilData.filter(d=>d.owner.includes('Ali'));
-  else if(f==='OUTREACH') aprFiltered=aprilData.filter(d=>d.stage.includes('Outreach'));
-  else if(f==='VALUE') aprFiltered=aprilData.filter(d=>d.value>0);
-  else aprFiltered=aprilData.filter(d=>d.temp===f);
-  aprPage=1;renderApril();
-}
-function searchApril(q){
-  const ql=q.toLowerCase();
-  aprFiltered=q?aprilData.filter(d=>d.account.toLowerCase().includes(ql)||d.product.toLowerCase().includes(ql)):[...aprilData];
-  aprPage=1;renderApril();
-}
-renderApril();
-
-// ═══ CHARTS ════════════════════════════════════════════════════════════════
-const N='#153a5e',T='#076e52',R='#b83232',A='#9a5f0f',S='#475569',P='#4a3fa0';
-const grd={color:'rgba(0,0,0,0.04)'};
-const tck={color:'#94a3b8',font:{size:11,family:'IBM Plex Sans'}};
-const bo={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:grd,ticks:tck},y:{grid:grd,ticks:tck}}};
-
-function chartClick(chart,event,modalKey){
-  const pts=chart.getElementsAtEventForMode(event,'nearest',{intersect:true},false);
-  if(pts.length>0)showModal(modalKey[pts[0].index]||modalKey);
-}
-
-const c1=new Chart(document.getElementById('c1'),{type:'bar',data:{labels:['Sangfor','SimuPhish','Acronis','CCTV P2','Trend Micro'],datasets:[{data:[659163,416000,113001,47000,27000],backgroundColor:[N,R,T,S,A],borderRadius:4}]},options:{...bo,indexAxis:'y',onClick:(e,el)=>{const i=el[0]?.index;const m=['sangfor-pipe','gdrfa','acronis-pipe','pipeline-total','deals-won-all'];if(i!==undefined)showModal(m[i]);},scales:{x:{...bo.scales.x,ticks:{...tck,callback:v=>'AED '+(v/1000).toFixed(0)+'K'}},y:bo.scales.y}}});
-
-const c2=new Chart(document.getElementById('c2'),{type:'line',data:{labels:['Jan–Feb','March','April'],datasets:[{data:[504160,680004,1184164],borderColor:N,backgroundColor:'rgba(21,58,94,0.07)',tension:0.35,fill:true,pointBackgroundColor:N,pointRadius:6,pointHoverRadius:8,borderWidth:2},{data:[180000,390000,1020000],borderColor:T,borderDash:[5,4],tension:0.35,fill:false,pointBackgroundColor:T,pointRadius:5,borderWidth:2}]},options:{...bo,onClick:(e,el)=>{const i=el[0]?.index;const m=['jf-opps','march-opps','april-all'];if(i!==undefined)showModal(m[i]);},scales:{x:bo.scales.x,y:{...bo.scales.y,ticks:{...tck,callback:v=>'AED '+(v/1000).toFixed(0)+'K'}}}}});
-
-const c4=new Chart(document.getElementById('c4'),{type:'doughnut',data:{labels:['Sangfor','SimuPhish','Acronis','CCTV P2','Trend Micro'],datasets:[{data:[659163,416000,113001,47000,27000],backgroundColor:[N,R,T,S,A],borderWidth:3,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'62%',onClick:(e,el)=>{const i=el[0]?.index;const m=['sangfor-pipe','gdrfa','acronis-pipe','pipeline-total','deals-won-all'];if(i!==undefined)showModal(m[i]);}}});
-
-const jf1=new Chart(document.getElementById('jf1'),{type:'bar',data:{labels:['Customer Mtgs/wk','Partner Mtgs/wk','Cold Visits/wk','Tech Discussions'],datasets:[{label:'January',data:[4.5,2.5,4,1.5],backgroundColor:N,borderRadius:3},{label:'February',data:[1.5,2.5,0,1.5],backgroundColor:'rgba(21,58,94,0.3)',borderRadius:3}]},options:{...bo,plugins:{legend:{display:true,labels:{font:{size:11,family:'IBM Plex Sans'},color:'#475569',boxWidth:10}}}}});
-
-const m1=new Chart(document.getElementById('m1'),{type:'bar',data:{labels:['Active Opps','New Meetings','Proposals','Negotiations','Closed Won'],datasets:[{label:'Jan–Feb',data:[6,2,2,2,0],backgroundColor:'rgba(21,58,94,0.3)',borderRadius:3},{label:'March',data:[13,12,4,3,2],backgroundColor:N,borderRadius:3}]},options:{...bo,onClick:(e,el)=>{const i=el[0]?.index;if(i===4)showModal('march-won');else showModal('march-opps');},plugins:{legend:{display:true,labels:{font:{size:11,family:'IBM Plex Sans'},color:'#475569',boxWidth:10}}}}});
-
-const m2=new Chart(document.getElementById('m2'),{type:'bar',data:{labels:['Closed Won','HOT','Final Stage','Warm','Cold'],datasets:[{data:[15000,431000,29000,616204,15000],backgroundColor:[T,R,N,A,S],borderRadius:4}]},options:{...bo,onClick:(e,el)=>{const i=el[0]?.index;const m=['march-won','hot-deals','hot-deals','discovery','march-opps'];if(i!==undefined)showModal(m[i]);},scales:{x:bo.scales.x,y:{...bo.scales.y,ticks:{...tck,callback:v=>'AED '+(v/1000).toFixed(0)+'K'}}}}});
-
-const pp1=new Chart(document.getElementById('pp1'),{type:'bar',data:{labels:['Sangfor','SimuPhish','Acronis','CCTV P2','Trend Micro'],datasets:[{data:[659163,416000,113001,47000,27000],backgroundColor:[N,R,T,S,A],borderRadius:4}]},options:{...bo,onClick:(e,el)=>{const i=el[0]?.index;const m=['sangfor-pipe','gdrfa','acronis-pipe','pipeline-total','deals-won-all'];if(i!==undefined)showModal(m[i]);},scales:{x:bo.scales.x,y:{...bo.scales.y,ticks:{...tck,callback:v=>'AED '+(v/1000).toFixed(0)+'K'}}}}});
-
-const pp2=new Chart(document.getElementById('pp2'),{type:'bar',data:{labels:['Sangfor','Acronis','SimuPhish','Trend Micro','CCTV P2'],datasets:[{data:[12,5,2,2,1],backgroundColor:[N,T,R,A,S],borderRadius:4}]},options:{...bo,onClick:(e,el)=>{const i=el[0]?.index;const m=['sangfor-pipe','acronis-pipe','gdrfa','deals-won-all','pipeline-total'];if(i!==undefined)showModal(m[i]);}}});
-
-const ap1=new Chart(document.getElementById('ap1'),{type:'doughnut',data:{labels:['WON','HOT','WARM','Cold'],datasets:[{data:[3,6,67,3],backgroundColor:[T,R,A,S],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11,family:'IBM Plex Sans'},color:'#475569',boxWidth:10,padding:8}}},cutout:'55%',onClick:(e,el)=>{const i=el[0]?.index;const m=['deals-won-all','hot-deals','outreach','outreach'];if(i!==undefined)showModal(m[i]);}}});
-
-const ap2=new Chart(document.getElementById('ap2'),{type:'bar',data:{labels:['Won','HOT','Proposal','Discovery','Demo/POC','Connected','Outreach'],datasets:[{data:[3,6,4,5,2,5,54],backgroundColor:[T,R,A,N,P,S,'#94a3b8'],borderRadius:3}]},options:{...bo,onClick:(e,el)=>{const i=el[0]?.index;const m=['deals-won-all','hot-deals','proposals','discovery','demo-poc','discovery','outreach'];if(i!==undefined)showModal(m[i]);},scales:{x:{...bo.scales.x,ticks:{...tck,maxRotation:30}},y:bo.scales.y}}});
-
-const ap3=new Chart(document.getElementById('ap3'),{type:'bar',data:{labels:['GDRFA','Bloomington','Paramount','Philadelphia','SIPS/IAG','Al Danube','SIPS/Acronis'],datasets:[{data:[416000,110400,110400,102000,55200,63000,20000],backgroundColor:[R,N,N,N,N,A,T],borderRadius:4}]},options:{...bo,indexAxis:'y',onClick:(e,el)=>{const i=el[0]?.index;const m=['gdrfa','sangfor-pipe','sangfor-pipe','education','sangfor-pipe','al-danube','hot-deals'];if(i!==undefined)showModal(m[i]);},scales:{x:{...bo.scales.x,ticks:{...tck,callback:v=>'AED '+(v/1000).toFixed(0)+'K'}},y:{...bo.scales.y,ticks:{...tck,font:{size:10,family:'IBM Plex Sans'}}}}}});
+  const CORRECT_PASSWORD = 'vision123'; // 🔄 CHANGE THIS TO YOUR DESIRED PASSWORD
+  
+  function checkPassword(e) {
+    e.preventDefault();
+    const pwd = document.getElementById('pwd').value;
+    const errorDiv = document.getElementById('error');
+    
+    if (pwd === CORRECT_PASSWORD) {
+      localStorage.setItem('visiontech_authenticated', 'true');
+      window.location.href = '#report';
+      location.reload();
+    } else {
+      errorDiv.style.display = 'block';
+      document.getElementById('pwd').value = '';
+      document.getElementById('pwd').focus();
+    }
+  }
+  
+  // Check if already authenticated
+  if (localStorage.getItem('visiontech_authenticated') === 'true') {
+    document.body.innerHTML = '<iframe id="report-frame" style="width:100vw;height:100vh;border:none;margin:0;padding:0" src="data:text/html;base64,' + btoa(document.documentElement.innerHTML) + '"></iframe>';
+  }
 </script>
-</body>
-</html>
+
+<!-- ACTUAL REPORT CONTENT (Hidden by default) -->
+<div style="display: none;" id="report-content">
